@@ -11,24 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/play/{num1}/{num2}', function($num1, $num2){
-    $data = [
-        'num1' => $num1,
-        'num2' => $num2
-    ];
-    return view('play', $data);
-});
-
-Route::get('/about', function(){
-    return view('about');
-});
-
-Route::get('/contact', function(){
-    return view('contact');
-});
-
-
+Route::get('/', 'HomeController@index');
+Route::get('/create', 'HomeController@create');
+Route::get('/login', 'HomeController@login');
