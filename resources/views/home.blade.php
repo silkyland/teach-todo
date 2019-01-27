@@ -9,11 +9,13 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <i class="fa fa-list"></i> รายการที่ต้องทำ
+                        @if(auth()->check())
                         <span class="pull-right"
                             ><a href="/create" class="btn btn-xs btn-success"
                                 ><i class="fa fa-plus"></i> เพิ่มรายการ</a
                             ></span
                         >
+                        @endif
                     </h4>
                 </div>
                 <table class="table table-striped table-hover">
@@ -23,34 +25,33 @@
                             <th>ชื่อรายการ</th>
                             <th>หมวดหมู่</th>
                             <th>สถานะ</th>
+                            @if(auth()->check())
                             <th>จัดการ</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($products as $product)
                         <tr>
-                            <td>{{$product->product_id}}</td>
-                            <td>{{$product->product_name}}</td>
-                            <td>{{$product->category->category_name}}</td>
+                            <td>{{$product->id}}</td>
+                            <td>{{$product->name}}</td>
+                            <td>{{$product->category->name}}</td>
                             <td>Incomplete</td>
+                            @if(auth()->check())
                             <td>
-                                <a href="/edit/{{$product->product_id}}" class="btn btn-warning btn-xs"
+                                <a href="/edit/{{$product->id}}" class="btn btn-warning btn-xs"
                                     ><i class="fa fa-edit"></i> edit</a
                                 >
-                                <a href="/delete/{{$product->product_id}}" class="btn btn-danger btn-xs"
+                                <a onclick="return confirm('แน่ใจหรือไม่ว่าจะลบข้อมูลนี้จริงๆ')" href="/delete/{{$product->id}}" class="btn btn-danger btn-xs"
                                     ><i class="fa fa-times"></i> delete</a
                                 >
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-            </ul>
+            {{ $products->links() }}
+
 @endsection

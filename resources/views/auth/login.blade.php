@@ -10,7 +10,17 @@
                     </h4>
                 </div>
                 <div class="panel-body">
-                    <form action="/login">
+                    <form action="/login" method="POST">
+                        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+                        {{csrf_field()}}
                         <div class="form-group">
                             <label for="inputUsername">USERNAME: </label>
                             <input type="text" name="username" placeholder="กรอก username" class="form-control">

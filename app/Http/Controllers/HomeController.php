@@ -8,19 +8,26 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index(){
-        $products = Product::all();
+        $products = Product::paginate(5);
 
         $data = [
             'products' => $products,
         ];
+
+        //dd($data);
         return view('home', $data);
     }
 
     public function store(){
         $product = new Product(); //INSERT
-        $product->product_name = request()->product_name;
+        $product->name = request()->name;
+        $product->user_id = auth()->user()->id;
         $product->category_id = request()->category_id;
+        $product->status = 0;
         $product->save();
         return redirect('/');
     }
@@ -46,14 +53,17 @@ class HomeController extends Controller
     }
 
     public function update(){
-        $product = Product::find(request()->product_id);
-        $product->product_name = request()->product_name;
+        $product = Product::find(request()->id);
+        $product->name = request()->name;
         $product->category_id = request()->category_id;
         $product->save();
         return redirect('/');
     }
 
-    public function login(){
-        return view('login');
+    public function delete($id){
+        // SELECT * FROM products WHERE product_id = '$id';
+        $product = Product::find($id);
+        $product->delete();
+        return redirect('/');
     }
 }
