@@ -11,14 +11,15 @@ class HomeController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
+
     public function index(){
-        $products = Product::paginate(5);
+        $products = Product::orderBy('id', 'desc')->paginate(5);
 
         $data = [
             'products' => $products,
         ];
 
-        //dd($data);
+        // dd($data);
         return view('home', $data);
     }
 

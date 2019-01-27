@@ -26,7 +26,6 @@ Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-//Route::get('/play', function () {
-//    $products = \App\Product::with('category')->get();
-//    return $products;
-//});
+
+Route::get('/user/{id}', 'UserController@index');
+Route::post('/product/toggle/{id}', 'ProductController@toggle');

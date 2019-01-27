@@ -5,6 +5,7 @@
                 กรองสถานะ : <a href="#">ทั้งหมด</a> |
                 <a href="#">Completed</a> | <a href="#">Incomplete</a>
             </p>
+        <p>สวัสดี, {{auth()->user()->name}} | <a onclick="return confirm('แน่ใจหรือไม่ที่จะออกจากระบบจริง?')" href="/logout">ออกจากระบบ</a></p>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -23,6 +24,7 @@
                         <tr>
                             <th>#</th>
                             <th>ชื่อรายการ</th>
+                            <th>ชื่อผู้ใช้</th>
                             <th>หมวดหมู่</th>
                             <th>สถานะ</th>
                             @if(auth()->check())
@@ -35,8 +37,9 @@
                         <tr>
                             <td>{{$product->id}}</td>
                             <td>{{$product->name}}</td>
+                            <td><a href="/user/{{$product->user_id}}">{{$product->user->name}}</a></td>
                             <td>{{$product->category->name}}</td>
-                            <td>Incomplete</td>
+                        <td id="_product_id_{{$product->id}}" onclick="toggle('{{$product->id}}')">@if($product->status == 0) Incomplete @else Completed @endif</td>
                             @if(auth()->check())
                             <td>
                                 <a href="/edit/{{$product->id}}" class="btn btn-warning btn-xs"
@@ -53,5 +56,16 @@
                 </table>
             </div>
             {{ $products->links() }}
-
+            @section('script')
+                <script>
+                    function toggle(id){
+                        console.log(id);
+                        axios.post('/product/toggle/' + id).then(function(response){
+                            $('#_product_id_' + id).html(response.data)
+                        }).catch(function(errror){
+                            console.log(errror.message)
+                        })
+                    }
+                </script>
+            @endsection
 @endsection
