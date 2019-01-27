@@ -27,34 +27,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($products as $product)
                         <tr>
-                            <td>1</td>
-                            <td>ซื้อสินค้าที่ Super Market</td>
-                            <td>Shopping</td>
+                            <td>{{$product->product_id}}</td>
+                            <td>{{$product->product_name}}</td>
+                            <td>{{$product->category->category_name}}</td>
                             <td>Incomplete</td>
                             <td>
-                                <a href="#" class="btn btn-warning btn-xs"
+                                <a href="/edit/{{$product->product_id}}" class="btn btn-warning btn-xs"
                                     ><i class="fa fa-edit"></i> edit</a
                                 >
-                                <a href="#" class="btn btn-danger btn-xs"
+                                <a href="/delete/{{$product->product_id}}" class="btn btn-danger btn-xs"
                                     ><i class="fa fa-times"></i> delete</a
                                 >
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>พาหมาไปวิ่งเล่น</td>
-                            <td>Activity</td>
-                            <td>Completed</td>
-                            <td>
-                                <a href="#" class="btn btn-warning btn-xs"
-                                    ><i class="fa fa-edit"></i> edit</a
-                                >
-                                <a href="#" class="btn btn-danger btn-xs"
-                                    ><i class="fa fa-times"></i> delete</a
-                                >
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
